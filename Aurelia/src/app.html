@@ -1,0 +1,13 @@
+<template>
+  <require from="app-footer.html"></require>
+
+  <header>
+    <compose view-model="nav-bar"
+             view.bind="nav-bar.html"
+             model.bind="{ router : 'router' }" ></compose>
+  </header>
+  <main class="page-host">
+    <router-view></router-view>
+  </main>
+  <app-footer></app-footer>
+</template>

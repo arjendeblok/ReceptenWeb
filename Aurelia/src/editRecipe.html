@@ -1,0 +1,99 @@
+<template>
+  <section class="au-animate container">
+    <h3>${heading}</h3>
+    <div class="row">
+      <form class="col s12" role="form">
+        <div class="row">
+          <div class="input-field col s12 m6 l6">
+            <input id="title" type="text" class="validate" value.bind="recipe.Title">
+            <label for="title">Titel *</label>
+            <div if.bind="submitCalled && titleInvalid" class="red-text">Titel moet zijn ingevuld</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 m6 l6">
+            <input id="subtitle" type="text" class="validate" value.bind="recipe.Subtitle">
+            <label for="subtitle">Omschrijving *</label>
+            <div if.bind="submitCalled && subtitleInvalid" class="red-text">Omschrijving moet zijn ingevuld</div>
+          </div>
+        </div>
+        <h5>Ingredienten</h5>
+        <div class="row">
+          <div class="col s6">
+            <div show.bind="recipe.Ingredients.length > 0">
+              <ul class="collection">
+                <li repeat.for="ingredient of recipe.Ingredients" class="collection-item">
+                  <div>
+                    ${ingredient.Count} ${ingredient.Dimension} ${ingredient.Name}
+                    <a href="#!" class="secondary-content" click.delegate="removeIngredient(ingredient)">
+                      <i class="material-icons red">remove</i>
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div show.bind="submitCalled && ingredientsInvalid" class="red-text">
+              Vul minimaal 1 ingredient in
+            </div>
+          </div>
+        </div>
+        <div class="row" with.bind="newIngredient">
+          <div class="input-field col s4 m2 l3">
+            <input placeholder="Ingredient" id="ingredient-name" type="text" class="validate" value.bind="Name">
+            <label for="ingredient-name">Naam</label>
+          </div>
+          <div class="input-field col s4 m2 l1">
+            <input placeholder="0" id="ingredient-count" type="text" class="validate" value.bind="Count">
+            <label for="ingredient-count">Aantal</label>
+          </div>
+          <div class="input-field col s4 m2 l1">
+            <label style="margin-top: -2rem;">Dimensie</label>
+            <select value.bind="Dimension" class="browser-default ">
+              <option value="" selected>-</option>
+              <option value="ml">ml</option>
+              <option value="g">gram</option>
+            </select>
+          </div>
+          <div class="input-field col s4 m2 l1">
+            <button click.delegate="addIngredient()" class="btn" disabled.bind="newIngredient.Name==''"><i class="large material-icons">add</i></button>
+          </div>
+        </div>
+        <h5>Bereiding</h5>
+        <div class="row">
+          <div class="col s6">
+            <div show.bind="recipe.Preparations.length > 0">
+              <ol class="collection">
+                <li repeat.for="preparation of recipe.Preparations" class="collection-item">
+                  <div>
+                    ${preparation}
+                    <a href="#!" class="secondary-content" click.delegate="removeStep(preparation)">
+                      <i class="material-icons red">remove</i>
+                    </a>
+                  </div>
+                </li>
+              </ol>
+            </div>
+            <div show.bind="submitCalled && preparationsInvalid" class="red-text">
+              Vul minimaal 1 stap in.
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 m6 l5">
+            <input id="new-step" type="text" class="validate" value.bind="newStep">
+            <label for="new-step">Bereidingsstap</label>
+          </div>
+          <div class="input-field col s4 m2 l1">
+            <button click.delegate="addStep()" class="btn" disabled.bind="newStep==''"><i class="large material-icons">add</i></button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <div if.bind="submitCalled && recipeInvalid" class="red-text">Niet alle velden zijn correct ingevuld</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-default" click.delegate="submit()">${action}</button>
+      </form>
+    </div>
+  </section>
+</template>
